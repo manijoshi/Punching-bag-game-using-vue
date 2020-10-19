@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Vue tutorial</title>
+    <link href="style.css" type="stylesheet"/>
+    <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Bangers|Roboto" rel="stylesheet">
+    <style>
+      body{
+        background-color: lightyellow;
+        line-height: .5rem;
+      }
+      h1 {
+      text-align: center;
+      font-size: 300%;
+      font-family: "Bangers", cursive;
+    }
+
+    h4 {
+      text-align: center;
+      font-family: "Roboto", sans-serif;
+    }
+
+      #bag{
+        width:200px;
+        height: 400px;
+        margin: 0 auto;
+        background: url(E:/images/bag.png) center no-repeat;
+        background-size: 80%;
+      }
+      #bag.burst{
+        background: url(E:/images/bag-burst.png) center no-repeat;
+        background-size: 80%;
+      }
+      #bag-health{
+        width: 200px;
+        border: 2px solid #000;
+        margin: 0 auto 20px auto;
+      }
+      #bag-health div{
+        height: 20px;
+        background: crimson;
+      }
+      #controls{
+        width: 120px;
+        margin: 0 auto;
+      }
+      #batman-words {
+      font-family: "Bangers", cursive;
+      font-size: 400%;
+      text-align: center;
+      -ms-layout-grid-line: auto;
+      line-height: 5rem;
+      }
+    </style>
+
+  </head>
+<body>
+    <div id="vue-app">
+      <div id="header">
+        <h1>Punch Bag Game!</h1>
+        <h4>warning - has audio!</h4>
+      </div>
+      <div id="bag" v-bind:class="{burst:ended}"></div>
+
+
+      <div id="bag-health">
+        <div v-bind:style="{width:health+'%'}" ></div>
+      </div>
+      <div id="controls">
+        <button @click="punch(),playpunch(),pickwords()" v-show="!ended">Punch</button>
+        <button @click="restart(),playsegway()">Restart</button>
+      </div>
+      <div id="batman-words">
+        {{chosenwords}}
+      </div>
+     
+    </div>
+    <script>
+      window.onload =function(){
+        new Vue ({
+          el:"#vue-app",
+          data:{
+            health:100,
+            ended:false,
+            batman:["AIEEE!!!!", "AIIEEE!!!!", "ARRGH!!!!", "AWK!!!!", "AWKKKKKK!!!!", "BAM!!!!", "BANG!!!!", "BANG - ETH!!!!", "BIFF!!!!", "BLOOP!!!!", "BLURP!!!!", "BOFF!!!!", "BONK!!!!", "CLANK!!!!", "CLANK - EST!!!!", "CLASH!!!!", "CLUNK!!!!", "CLUNK - ETH!!!!", "CRRAACK!!!!", "CRASH!!!!", "CRRAACK!!!!", "CRUNCH!!!!", "CRUNCH - ETH!!!!", "EEE - YOW!!!!", "FLRBBBBB!!!!", "GLIPP!!!!", "GLURPP!!!!", "KAPOW!!!!", "KAYO!!!!", "KER - SPLOOSH!!!!", "KERPLOP!!!!", "KLONK!!!!", "KLUNK!!!!", "KRUNCH!!!!", "OOOFF!!!!", "OOOOFF!!!!", "OUCH!!!!", "OUCH - ETH!!!!", "OWWW!!!!", "OW - ETH!!!!", "PAM!!!!", "PLOP!!!!", "POW!!!!", "POWIE!!!!", "QUNCKKK!!!!", "RAKKK!!!!", "RIP!!!!", "SLOSH!!!!", "SOCK!!!!", "SPLATS!!!!", "SPLATT!!!!", "SPLOOSH!!!!", "SWAAP!!!!", "SWISH!!!!", "SWOOSH!!!!", "THUNK!!!!", "THWACK!!!!", "THWACKE!!!!", "THWAPE!!!!", "THWAPP!!!!", "UGGH!!!!", "URKKK!!!!", "VRONK!!!!", "WHACK!!!!", "WHACK - ETH!!!!", "WHAM - ETH!!!!", "WHAMM!!!!", "WHAMMM!!!!", "WHAP!!!!", "Z - ZWAP!!!!", "ZAM!!!!", "ZAMM!!!!", "ZAMMM!!!!", "ZAP!!!!", "ZAP - ETH!!!!", "ZGRUPPP!!!!", "ZLONK!!!!", "ZLOPP!!!!", "ZLOTT!!!!", "ZOK!!!!", "ZOWIE!!!!", "ZWAPP!!!!", "ZZWAP!!!!", "ZZZZWAP!!!!", "ZZZZZWAP!!!!"],
+            chosenwords:""
+          },
+          methods:{
+            punch:function(){
+              this.health-=10;
+              if (this.health<=0){
+                this.ended=true;
+                this.playknockout();
+              }
+            },
+            restart:function(){
+              this.health=100;
+              this.ended=false;
+              this.chosenwords = "";
+
+            },
+            pickwords: function(){
+              this.chosenwords=this.batman[
+                Math.floor(Math.random()*this.batman.length)
+                ];
+            },
+            playpunch:function(){
+              var punch=new Audio("D:/Web Designing/Web Designing/selflearning/vue practices/punch.mp3")
+              punch.play()
+            },
+            playknockout:function(){
+              var knockout=new Audio("D:/Web Designing/Web Designing/selflearning/vue practices/knockout.wav");
+              var fainted=new Audio("D:/Web Designing/Web Designing/selflearning/vue practices/fainted.mp3");
+              fainted.play();
+              knockout.play();
+            },
+            playsegway:function(){
+              var segway=new Audio('D:/Web Designing/Web Designing/selflearning/vue practices/segway.mp3');
+              segway.play();
+            }
+            
+          }
+        });
+      };
+    </script>
+</body>
+</html>
